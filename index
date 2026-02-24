@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Your Name</title>
+</head>
+<body>
+    <h1>Your Name</h1>
+
+    <h2>About Me</h2>
+    <p>I'm a student learning web development. This is my first HTML page,
+    and I'm excited to learn more about creating websites.</p>
+
+    <h2>My Interests</h2>
+    <ul>
+        <li>Web Development</li>
+        <li>Technology</li>
+        <li>Learning new skills</li>
+    </ul>
+
+    <h2>Featured Image</h2>
+    <img src="https://picsum.photos/400/300"
+         alt="A random placeholder image"
+         width="400"
+         height="300">
+
+    <h2>Useful Resources</h2>
+    <ul>
+        <li><a href="https://developer.mozilla.org/">MDN Web Docs</a></li>
+        <li><a href="https://www.w3schools.com/">W3Schools</a></li>
+    </ul>
+
+    <p>Learning HTML is <strong>essential</strong> for web development.</p>
+</body>
+</html>
