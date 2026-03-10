@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hamish Buchanan - 22221304</title>
-  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <nav>
+  <nav data-collapsible data-expanded="false" aria-label="Primary">
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#interests">Interests</a></li>
@@ -15,12 +20,22 @@
       <li><a href="projects.html">Projects</a></li>
     </ul>
   </nav>
+
   <main class="container">
     <section id="about">
       <h1>All about myself</h1>
       <p>I'm a third year university student, and this is my first html page.</p>
-      <img src="https://preview.redd.it/shannon-sharpe-fit-checks-taken-directly-from-source-v0-mhyx4qxo15c91.jpg?width=640&crop=smart&auto=webp&s=591228436f4d393660f82467ce7296bffcf7dfb1" alt="money man" width="640" height="853">
+
+      <img
+        src="https://preview.redd.it/shannon-sharpe-fit-checks-taken-directly-from-source-v0-mhyx4qxo15c91.jpg?width=640&crop=smart&auto=webp&s=591228436f4d393660f82467ce7296bffcf7dfb1"
+        alt="Person posing in an outfit"
+        width="640"
+        height="853"
+        loading="lazy"
+        decoding="async"
+      />
     </section>
+
     <section id="interests">
       <h2>My Interests</h2>
       <ul>
@@ -29,17 +44,20 @@
         <li>Learning new skills</li>
       </ul>
     </section>
+
     <section id="achievements">
       <h3>What I've achieved so far</h3>
       <ul>
         <li>Completed year 12 ATAR subjects</li>
-        <li>5 years work expereince at Coles</li>
+        <li>5 years work experience at Coles</li>
       </ul>
     </section>
   </main>
+
   <footer>
-    <p>Email: hamish.buchanan@student.curtin.edu.au</p>
+    <p>Email: <a href="mailto:hamish.buchanan@student.curtin.edu.au">hamish.buchanan@student.curtin.edu.au</a></p>
   </footer>
+
   <script src="js/main.js" defer></script>
 </body>
 </html>
