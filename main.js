@@ -1,13 +1,4 @@
-
-// js/main.js — Portfolio interactions (Hamish Buchanan)
-// Features implemented for Checkpoint 1.3 (Week 4):
-// 1) Mobile navigation toggle (accessible, keyboard friendly)
-// 2) Theme switcher (light/dark with localStorage persistence + prefers-color-scheme)
-// 3) Projects page: search + category filter + sort + details disclosure
-// Code style: no inline handlers; using addEventListener; progressive enhancement.
-
 (function () {
-  // Add a marker class to <html> so CSS can progressively enhance
   document.documentElement.classList.add('js');
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -16,20 +7,14 @@
     initProjectControls();
   });
 
-  /**
-   * Create an accessible hamburger button that toggles the primary nav
-   * - Uses aria-expanded and aria-controls per WAI-ARIA disclosure guidance
-   */
   function initNavToggle() {
     const nav = document.querySelector('nav');
     const list = nav && nav.querySelector('ul');
     if (!nav || !list) return;
 
-    // Ensure list has an id for aria-controls
     if (!list.id) list.id = 'site-navlist';
     nav.setAttribute('data-collapsible', '');
 
-    // Create the toggle button (insert before the list)
     const btn = document.createElement('button');
     btn.id = 'nav-toggle';
     btn.type = 'button';
@@ -39,7 +24,6 @@
 
     nav.insertBefore(btn, list);
 
-    // Toggle logic
     const setExpanded = (expanded) => {
       btn.setAttribute('aria-expanded', String(expanded));
       nav.setAttribute('data-expanded', String(expanded));
@@ -50,12 +34,10 @@
       setExpanded(next);
     });
 
-    // Close on Escape when focus is inside nav
     nav.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') setExpanded(false);
     });
 
-    // Click outside to close (if open)
     document.addEventListener('click', (e) => {
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       if (!expanded) return;
@@ -63,14 +45,9 @@
     });
   }
 
-  /**
-   * Theme switcher with localStorage persistence.
-   * - Respects system preference (prefers-color-scheme) until user chooses.
-   */
   function initThemeToggle() {
     const header = document.querySelector('header') || document.body;
 
-    // Build button
     const btn = document.createElement('button');
     btn.id = 'theme-toggle';
     btn.type = 'button';
@@ -79,8 +56,7 @@
     const sun = '☀️';
     const moon = '🌙';
 
-    // Helpers
-    const applyTheme = (theme /* 'dark' | 'light' | null */) => {
+    const applyTheme = (theme) => {
       if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         btn.setAttribute('aria-pressed', 'true');
@@ -90,7 +66,6 @@
         btn.setAttribute('aria-pressed', 'false');
         btn.textContent = `${moon} Dark mode`;
       } else {
-        // No explicit theme; remove attribute to allow prefers-color-scheme CSS
         document.documentElement.removeAttribute('data-theme');
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         btn.setAttribute('aria-pressed', prefersDark ? 'true' : 'false');
@@ -98,13 +73,11 @@
       }
     };
 
-    // Initial from localStorage
     let saved = null;
     try { saved = localStorage.getItem('theme'); } catch (e) {}
     if (saved !== 'dark' && saved !== 'light') saved = null;
     applyTheme(saved);
 
-    // Listen for system changes only if no explicit choice
     if (!saved && window.matchMedia) {
       const mq = window.matchMedia('(prefers-color-scheme: dark)');
       mq.addEventListener('change', () => applyTheme(null));
@@ -117,7 +90,6 @@
       applyTheme(next);
     });
 
-    // Mount button into header (before nav if possible)
     const nav = document.querySelector('nav');
     if (nav && nav.parentNode === header) {
       header.insertBefore(btn, nav);
@@ -126,16 +98,9 @@
     }
   }
 
-  /**
-   * Projects page controls
-   * - Search by title/description
-   * - Filter by category via buttons
-   * - Sort by year/title
-   * - Toggle project details disclosure per card
-   */
   function initProjectControls() {
     const grid = document.querySelector('.projects-grid');
-    if (!grid) return; // Only on projects.html
+    if (!grid) return;
 
     const cards = Array.from(grid.querySelectorAll('.project-card'));
 
@@ -154,7 +119,6 @@
 
       let visible = cards.slice();
 
-      // Filter by search
       if (q) {
         visible = visible.filter(card => {
           const text = normalize(card.dataset.title + ' ' + card.dataset.desc);
@@ -162,25 +126,21 @@
         });
       }
 
-      // Filter by category
       if (category && category !== 'all') {
         visible = visible.filter(card => (card.dataset.category || '').split(',').map(normalize).includes(category));
       }
 
-      // Sort
       const byTitle = (a,b) => a.dataset.title.localeCompare(b.dataset.title);
       const byYearDesc = (a,b) => parseInt(b.dataset.year||'0') - parseInt(a.dataset.year||'0');
       if (sortVal === 'az') visible.sort(byTitle);
       else visible.sort(byYearDesc);
 
-      // Apply visibility
       cards.forEach(c => c.hidden = true);
       visible.forEach(c => c.hidden = false);
 
       if (countEl) countEl.textContent = `${visible.length} project${visible.length===1?'':'s'} shown`;
     }
 
-    // Wire up controls
     if (search) search.addEventListener('input', apply);
     if (sort) sort.addEventListener('change', apply);
     if (filterGroup) {
@@ -193,17 +153,15 @@
       });
     }
 
-    // Details toggles
     grid.addEventListener('click', (e) => {
       const t = e.target.closest('.details-toggle');
       if (!t) return;
       const details = t.parentElement.querySelector('.project-details');
       const expanded = t.getAttribute('aria-expanded') === 'true';
       t.setAttribute('aria-expanded', String(!expanded));
-      if (details) details.hidden = expanded; // hide if already expanded
+      if (details) details.hidden = expanded; 
     });
 
-    // Initial render
     apply();
   }
 })();
